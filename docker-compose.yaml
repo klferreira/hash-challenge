@@ -1,0 +1,36 @@
+version: "3.7"
+services:
+  product-service:
+    build: ./product-service
+    container_name: product-service
+    ports:
+      - "8080:8080"
+    depends_on:
+      - db
+    environment:
+      - DISCOUNT_SERVICE_URI=discount-service:50052
+      - DATABASE_URI=db:3306
+  discount-service:
+    build: ./discount-service
+    container_name: discount-service
+    ports:
+      - "50052:50052"
+    depends_on:
+      - db
+    environment:
+      - DISCOUNT_SERVICE_PORT=:50052
+  db:
+    image: mysql:5.7
+    container_name: hash-challenge-db
+    command: mysqld --user=root
+    volumes:
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+    ports:
+      - "3306:3306"
+    environment:
+      - MYSQL_DATABASE=hashchallenge
+      - MYSQL_ROOT_PASSWORD=toor
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      timeout: 5s
+      retries: 8
