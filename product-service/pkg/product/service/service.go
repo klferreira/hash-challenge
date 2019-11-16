@@ -57,7 +57,7 @@ func (s *productService) Fetch(ctx context.Context) ([]*product.Product, error) 
 		return nil, errors.Wrap(err, "Could not fetch products")
 	}
 
-	if userID, ok := authctx.FromContext(ctx); !ok {
+	if userID, ok := authctx.FromContext(ctx); ok {
 		s.fillDiscounts(ctx, ps, userID)
 	}
 
