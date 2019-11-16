@@ -9,7 +9,10 @@ services:
       - db
     environment:
       - DISCOUNT_SERVICE_URI=discount-service:50052
-      - DATABASE_URI=db:3306
+      - DB_URI=db:3306
+      - DB_USER=root
+      - DB_PASS=toor
+      - DB_NAME=hashchallenge
   discount-service:
     build: ./discount-service
     container_name: discount-service
@@ -19,6 +22,10 @@ services:
       - db
     environment:
       - DISCOUNT_SERVICE_PORT=:50052
+      - DB_URI=db:3306
+      - DB_USER=root
+      - DB_PASS=toor
+      - DB_NAME=hashchallenge
   db:
     image: mysql:5.7
     container_name: hash-challenge-db
