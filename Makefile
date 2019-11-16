@@ -6,3 +6,6 @@ up:
 
 down:
 	docker-compose stop
+
+share-proto:
+	sh share-proto.sh

@@ -13,3 +13,6 @@
 
 # Service binary
 service
+
+# protobuf
+proto
