@@ -2,8 +2,8 @@ const Sequelize = require('sequelize')
 
 const { DB_USER, DB_PASS, DB_NAME, DB_URI } = process.env
 
-const databaseUri = `mysql://${DB_USER}:${DB_PASS}@${DB_URI}/${DB_NAME}`
+function getDatabaseURI(dbUser = 'root', dbPass = 'toor', dbName = 'hashchallenge', uri = '127.0.0.1:3306') {
+	return `mysql://${dbUser}:${dbPass}@${uri}/${dbName}`
+}
 
-console.log(databaseUri)
-
-module.exports = new Sequelize(databaseUri)
+module.exports = new Sequelize(getDatabaseURI(DB_USER, DB_PASS, DB_NAME, DB_URI))

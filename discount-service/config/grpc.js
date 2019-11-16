@@ -1,6 +1,6 @@
 const grpc = require('grpc')
 const protoLoader = require('@grpc/proto-loader')
-const { map, reduce } = require('ramda')
+const { map } = require('ramda')
 
 const loadProto = (path, service) => {
   const def = grpc.loadPackageDefinition(protoLoader.loadSync(path, {
@@ -11,18 +11,21 @@ const loadProto = (path, service) => {
     oneofs: true
   }))
 
-  return def[service].service
+  return def.proto[service].service
 }
 
 const loadServiceProtos =
   map(s => ({ def: loadProto(s.protoPath, s.name), impl: s.service }))
 
-const loadServices = services => server =>
-  reduce(
-    (server, s) => {
-      server.addService(s.def, s.impl)
-      return server
-    }, server, loadServiceProtos(services)
-  )
+function main(services, port = ":50052") {
+  const server = new grpc.Server()
+  
+  loadServiceProtos(services)
+    .forEach(service => server.addService(service.def, service.impl))
 
-module.exports = { loadServices }
+  server.bind(`0.0.0.0${port}`, grpc.ServerCredentials.createInsecure())
+
+  server.start()
+}
+
+module.exports = { main }
