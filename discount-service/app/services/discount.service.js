@@ -7,7 +7,7 @@ var BLACK_FRIDAY = {
 }
 
 function compareDayAndMonth(d1, d2) {
-  return d1.getDate() == d2.getDate() && d2.getMonth() == d3.getMonth()
+  return d1.getUTCDate() == d2.getUTCDate() && d2.getUTCMonth() == d2.getUTCMonth()
 }
 
 function isBlackFriday() {
@@ -28,11 +28,11 @@ async function getProductDiscount({ productID, userID }) {
     .then(user => new Date(user.get('dateOfBirth')))
     .catch(err => Promise.reject(err))
 
-  if (isUserBirthday(dob))
+  if (isUserBirthday(dob)) 
     pct = .05 
 
   if (isBlackFriday())
-    pct = .10
+    pct = .10 
 
   const priceInCents = await Product.findByPk(productID)
     .then(p => p.priceInCents)

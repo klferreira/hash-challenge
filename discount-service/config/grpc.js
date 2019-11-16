@@ -25,6 +25,7 @@ function main(services, port = ":50052") {
 
   server.bind(`0.0.0.0${port}`, grpc.ServerCredentials.createInsecure())
 
+  console.log(`Listening on port ${port}`)
   server.start()
 }
 
