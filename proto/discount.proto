@@ -1,10 +1,14 @@
+syntax = "proto3";
+
+package proto;
+
 service DiscountService {
     rpc GetDiscount (GetDiscountRequest) returns (GetDiscountResponse) {}
 }
 
 message Discount {
-    int32 amountInCents = 1;
-    int32 percentual = 2;
+    int64 priceInCents = 1;
+    float percentual = 2;
 }
 
 message GetDiscountRequest {
