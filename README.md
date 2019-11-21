@@ -25,6 +25,7 @@ E então, para criar os containers:
 ```
 
 Após isso o serviço de produtos estará rodando na porta `:8080` e o de discontos na porta `:50052`.
+O endpoint para recuperar os produtos com descontos será `/v1/products`
 
 
 # Stack
